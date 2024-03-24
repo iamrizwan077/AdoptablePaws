@@ -1,4 +1,3 @@
-import {useState, useEffect} from 'react';
 import fetchBreedList from './fetchBreedList';
 import { useQuery } from '@tanstack/react-query';
 

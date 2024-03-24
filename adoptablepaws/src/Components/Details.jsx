@@ -13,7 +13,7 @@ const Details = () => {
   if (results.isLoading) {
     return <h1>Loading...</h1>;
   }
-  console.log(results.data.pets);
+  // console.log(results.data.pets);
   const pet = results.data.pets[0];
 
   return (

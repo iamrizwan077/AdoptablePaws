@@ -1,6 +1,8 @@
+/* eslint-disable react/prop-types */
 import Pet from "./Pet";
 
 const Results = ({ pets }) => {
+  console.log(pets)
   return (
     <div>
       {!pets.length ? (
