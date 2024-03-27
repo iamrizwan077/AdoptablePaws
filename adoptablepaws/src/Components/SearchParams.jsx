@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import useBreedList from "../scripts/useBreedList";
 import Results from "./Results";
 import { useQuery } from "@tanstack/react-query";
 import fetchSearch from "../scripts/fetchSearch";
+import AdoptedPetContext from "./AdoptedPetContext";
 
 const ANIMALS = ["bird", "cat", "dog", "rabbit", "reptile"];
 
@@ -14,6 +15,7 @@ const SearchParams = () => {
   });
   const [animal, setAnimal] = useState("");
   const [breeds] = useBreedList(animal);
+  const [adoptedPet] = useContext(AdoptedPetContext); // Getting only first value from the array
 
   const results = useQuery({
     queryKey: ["search", requestParams],
@@ -40,6 +42,11 @@ const SearchParams = () => {
           setRequestParams(obj);
         }}
       >
+        {adoptedPet ? (
+          <h1>
+            You have adopted {adoptedPet.name} - {adoptedPet.animal}!
+          </h1>
+        ) : null}
         <label htmlFor="location">
           Location
           <input type="text" name="location" id="location" />

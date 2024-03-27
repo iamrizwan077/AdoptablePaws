@@ -1,13 +1,15 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import fetchPet from "../scripts/fetchPet";
 import ErrorBoundary from "./ErrorBoundary";
-import Modal from "./Modal";
+import AdoptedPetContext from "./AdoptedPetContext";
 
 const Details = () => {
   const { id } = useParams();
   const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
+  const [_, setAdoptedPet] = useContext(AdoptedPetContext);
 
   //From React Query v5, only Object type is supported in useQuery params
   // earlier it was useQuery(["details", id], fetchPet);
@@ -30,7 +32,14 @@ const Details = () => {
       {showModal ? (
         <div>
           <h1>Would you like to adopt {pet.name}</h1>
-          <button>Yes</button>
+          <button
+            onClick={(e) => {
+              setAdoptedPet(pet);
+              navigate("/");
+            }}
+          >
+            Yes
+          </button>
           <button onClick={(e) => setShowModal(false)}>No</button>
         </div>
       ) : null}
