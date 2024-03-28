@@ -4,6 +4,7 @@ import Results from "./Results";
 import { useQuery } from "@tanstack/react-query";
 import fetchSearch from "../scripts/fetchSearch";
 import AdoptedPetContext from "./AdoptedPetContext";
+import { LuLoader2 } from "react-icons/lu";
 
 const ANIMALS = ["bird", "cat", "dog", "rabbit", "reptile"];
 
@@ -22,14 +23,17 @@ const SearchParams = () => {
     queryFn: fetchSearch,
   });
   if (results.isLoading) {
-    return <h1>Loading...</h1>;
+    return (
+      <LuLoader2 className="text-6xl fixed inset-1/2 animate-spin" />
+    );
   }
 
   const pets = results?.data?.pets ?? [];
 
   return (
-    <div>
+    <div className="my-4 sm:my-16 flex flex-col md:flex-row items-start mx-4 md:mx-24 gap-4 md:gap-12">
       <form
+        className="flex flex-col rounded-lg text-left bg-gray-200 justify-center items-left max-w-2xl mx-auto px-4 sm:px-16 py-4 sm:py-6 w-full sm:w-2/5"
         onSubmit={(e) => {
           e.preventDefault();
           const formData = new FormData(e.target);
@@ -43,17 +47,41 @@ const SearchParams = () => {
         }}
       >
         {adoptedPet ? (
-          <h1>
-            You have adopted {adoptedPet.name} - {adoptedPet.animal}!
-          </h1>
+          <div className="text-lg sm:text-xl">
+            <div className="flex flex-col items-center">
+              <img
+                src={adoptedPet.images[0]}
+                alt={adoptedPet.name}
+                className="border border-black border-2 rounded-full h-24 sm:flex-shrink-0"
+              />
+              <h2 className="text-center font-semibold">
+                Congratulations! You have adopted {adoptedPet.name}.
+              </h2>
+            </div>
+          </div>
         ) : null}
-        <label htmlFor="location">
+        <h2 className="font-semibold text-center text-2xl sm:text-4xl pt-4 pb-3">
+          Search Pet
+        </h2>
+        <label
+          htmlFor="location"
+          className="font-semibold text-md sm:text-lg my-3 sm:my-5 flex flex-col"
+        >
           Location
-          <input type="text" name="location" id="location" />
+          <input
+            className="px-3 py-1.5 rounded"
+            type="text"
+            name="location"
+            id="location"
+          />
         </label>
-        <label htmlFor="animal">
+        <label
+          htmlFor="animal"
+          className="font-semibold text-md sm:text-lg flex flex-col mb-3 sm:mb-5"
+        >
           Animal
           <select
+            className="py-2 bg-white rounded px-3"
             name="animal"
             id="animal"
             onChange={(e) => {
@@ -61,13 +89,23 @@ const SearchParams = () => {
             }}
           >
             {ANIMALS.map((animal) => (
-              <option key={animal}>{animal}</option>
+              <option className="text-center" key={animal}>
+                {animal}
+              </option>
             ))}
           </select>
         </label>
-        <label htmlFor="breed">
+        <label
+          htmlFor="breed"
+          className="font-semibold text-md sm:text-lg flex flex-col mb-3 sm:mb-5"
+        >
           Breed
-          <select name="breed" id="breed" disabled={breeds.length === 0}>
+          <select
+            className="py-2 bg-white rounded px-3"
+            name="breed"
+            id="breed"
+            disabled={breeds.length === 0}
+          >
             {breeds.map((breed) => (
               <option value={breed} key={breed}>
                 {breed}
@@ -76,7 +114,12 @@ const SearchParams = () => {
           </select>
         </label>
 
-        <button type="submit">Submit</button>
+        <button
+          type="submit"
+          className="bg-gradient-to-r from-pink-500 to-pink-700 hover:from-pink-700 hover:to-pink-900 text-white font-semibold py-2 px-4 rounded-md shadow-md transition duration-300 ease-in-out"
+        >
+          Submit
+        </button>
       </form>
       {<Results pets={pets} />}
     </div>

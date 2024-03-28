@@ -2,11 +2,13 @@
 import Pet from "./Pet";
 
 const Results = ({ pets }) => {
-  console.log(pets)
+  // console.log(pets)
   return (
-    <div>
+    <div className="w-full lg:w-3/5">
       {!pets.length ? (
-        <h2>No Pets Found</h2>
+        <h2 className="lg:py-16 text-xl sm:text-3xl py-6 md:py-12 flex justify-center border border-pink-700 font-semibold rounded border-2">
+          No Pets Found :(
+        </h2>
       ) : (
         pets.map((pet) => (
           <Pet
